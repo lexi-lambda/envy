@@ -24,24 +24,25 @@
      (,#'Negative-Integer    . ,#'string->negative-integer)
      (,#'Nonnegative-Integer . ,#'string->nonnegative-integer))))
 
-(define-syntax-parser define-environment-variable
-  #:literals (:)
-  [(_ (~describe "name" name:id)
-      (~optional (~describe "type" (~seq : type:id)) #:defaults ([type #'String]))
-      (~or (~optional (~seq #:name env-var-name:expr) #:defaults ([env-var-name #f]))
-           (~optional (~seq #:default default:expr) #:defaults ([default #f])))
-      ...)
-   (with-syntax* ([env-var-name (or (attribute env-var-name)
-                                    (~> (syntax-e #'name)
-                                        symbol->string
-                                        string-upcase
-                                        (string-replace "-" "_")))]
-                  [coerce (dict-ref auto-type-table #'type)]
-                  [fetch-env-var
-                   (if (attribute default)
-                       #'(require-environment-variable env-var-name coerce default)
-                       #'(require-environment-variable env-var-name coerce))])
-     #'(define name fetch-env-var))])
+(define-syntax (define-environment-variable stx)
+  (syntax-parse stx
+    #:literals (:)
+    [(_ (~describe "name" name:id)
+        (~optional (~describe "type" (~seq : type:id)) #:defaults ([type #'String]))
+        (~or (~optional (~seq #:name env-var-name:expr) #:defaults ([env-var-name #f]))
+             (~optional (~seq #:default default:expr) #:defaults ([default #f])))
+        ...)
+     (with-syntax* ([env-var-name (or (attribute env-var-name)
+                                      (~> (syntax-e #'name)
+                                          symbol->string
+                                          string-upcase
+                                          (string-replace "-" "_")))]
+                    [coerce (dict-ref auto-type-table #'type)]
+                    [fetch-env-var
+                     (if (attribute default)
+                         #'(require-environment-variable env-var-name coerce default)
+                         #'(require-environment-variable env-var-name coerce))])
+       #'(define name fetch-env-var))]))
 
 (begin-for-syntax
   (define-syntax-class environment-clause
@@ -49,18 +50,20 @@
     (pattern name:id #:with normalized #'[name])
     (pattern [name:id args ...] #:with normalized #'[name args ...])))
 
-(define-syntax-parser define-environment
-  [(_ clause:environment-clause ...)
-   (with-syntax ([((normalized ...) ...) #'(clause.normalized ...)])
-     #'(begin (define-environment-variable normalized ...) ...))])
+(define-syntax (define-environment stx)
+  (syntax-parse stx
+    [(_ clause:environment-clause ...)
+     (with-syntax ([((normalized ...) ...) #'(clause.normalized ...)])
+       #'(begin (define-environment-variable normalized ...) ...))]))
 
-(define-syntax-parser define/provide-environment
-  [(_ clause:environment-clause ...)
-   (with-syntax ([(name ...) #'(clause.name ...)]
-                 [((normalized ...) ...) #'(clause.normalized ...)])
-     #'(begin (begin (define-environment-variable normalized ...)
-                     (provide name))
-              ...))])
+(define-syntax (define/provide-environment stx)
+  (syntax-parse stx
+    [(_ clause:environment-clause ...)
+     (with-syntax ([(name ...) #'(clause.name ...)]
+                   [((normalized ...) ...) #'(clause.normalized ...)])
+       #'(begin (begin (define-environment-variable normalized ...)
+                       (provide name))
+                ...))]))
 
 (: require-environment-variable (All [a b] (case-> (String (String -> a) -> a)
                                                    (String (String -> a) b -> (U a b)))))
