@@ -3,6 +3,7 @@ compiled/
 
 # Scribble documentation files
 doc/
+docs/
 
 # cover-generated code coverage reports
 coverage/

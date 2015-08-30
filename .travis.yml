@@ -4,9 +4,11 @@ sudo: false
 
 env:
   global:
-    - RACKET_DIR=~/racket
+    - GH_REF: 'github.com/lexi-lambda/envy.git'
+    - secure: "n1KL/bsIonALINjDlYEmUgekwJ0Aop5jdP08JX5ldcDfj5+hsb5LgRywOxlysAKf/lbQ/lCREmuRXBMnt8JTID08CvwAtNq+WgFunuuIu/LNNwCCgjsLGcFDEjlx/4WgcMBqoXFU08aS9ExL0okwRSWVnOK4GAbyBcNd6aTwefrwEgntxJjf8yCXUhjnAPAxhYstuYOQntp1wqqsrHjjlnNfz4p59Sp7ckboi7RXgySCuTpcRktK+WVuLQWukrM+RF/sSz4PZAAQ/x/Ges6SOakqtAYFcysU9AE+pftSG9xztUWrekH4jb3+/JqfGgHmvafwFAsLITTJ0ctOGcwozXi6m0249q+eyidP6TTaZy+NvvEyEsL0WxQND6x420Isj/01nZHgLmlqEuXlPkWj1Bym5WK0b6+deWfgGLaBrw5XKt4znP4GLoF1ImhjzyXwdSh0eYv1U/xvOdeiTna/q9iGJ5zVzqtjIXIxvO0HgEpw1qgMGUdDMJGyfjqWtvk+AKRSc3Tk+VPL1MxsEfvYrLYY3xZ6/tZGeZGzPfY7r0TEnNjVkUhsAFaIApPagM7wMNcvLMWyldHLszsGZbT0DJbJHx2s7izdSTgfdfx8tqlEIB1esNM5ZDwZ2aTAXJL0CWpeGuTMWMNmccCoPTIBNaV6BNOYocuKzDKkTJ/u+mI="
+    - RACKET_DIR: '~/racket'
   matrix:
-    - RACKET_VERSION=HEAD
+    - RACKET_VERSION: HEAD
 
 before_install:
   - git clone https://github.com/greghendershott/travis-racket.git
@@ -21,4 +23,5 @@ before_script:
 script:
   - raco test -p envy
 
-after_script:
+after_success:
+  - bash deploy-docs.sh
