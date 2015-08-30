@@ -1,4 +1,4 @@
-# Envy [![Build Status](https://travis-ci.org/lexi-lambda/envy.svg?branch=master)](https://travis-ci.org/lexi-lambda/envy)
+# Envy [![Build Status](https://travis-ci.org/lexi-lambda/envy.svg?branch=master)](https://travis-ci.org/lexi-lambda/envy) [![Issues in Backlog](https://badge.waffle.io/lexi-lambda/envy.svg?label=backlog&title=Backlog)](http://waffle.io/lexi-lambda/envy)
 
 Envy is an environment variable manager for Racket applications.
 
