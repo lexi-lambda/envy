@@ -12,8 +12,7 @@
     "typed-racket-lib"
     "unstable-contract-lib"))
 (define build-deps
-  '("cover"
-    "racket-doc"
+  '("racket-doc"
     "scribble-lib"
     "typed-racket-doc"
     "typed-racket-more"))

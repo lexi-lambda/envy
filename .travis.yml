@@ -21,6 +21,5 @@ before_script:
 
 script:
   - raco test -p envy
-  - raco cover -bf coveralls -d $TRAVIS_BUILD_DIR/coverage -p envy
 
 after_script:
