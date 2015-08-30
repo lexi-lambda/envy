@@ -176,7 +176,6 @@ environment. This can be done with the @racket[#:name] option.
     @item{@racket[Integer]}
     @item{@racket[Positive-Integer]}
     @item{@racket[Negative-Integer]}
-    @item{@racket[Nonpositive-Integer]}
     @item{@racket[Nonnegative-Integer]}]
 
   If the specified variable does not exist in the environment, @racket[name-id] is set to the value of

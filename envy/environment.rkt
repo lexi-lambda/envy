@@ -22,7 +22,6 @@
      (,#'Integer             . ,#'string->integer)
      (,#'Positive-Integer    . ,#'string->positive-integer)
      (,#'Negative-Integer    . ,#'string->negative-integer)
-     (,#'Nonpositive-Integer . ,#'string->nonpositive-integer)
      (,#'Nonnegative-Integer . ,#'string->nonnegative-integer))))
 
 (define-syntax-parser define-environment-variable

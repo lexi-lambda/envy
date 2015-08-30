@@ -7,7 +7,6 @@
 (provide string->integer
          string->positive-integer
          string->negative-integer
-         string->nonpositive-integer
          string->nonnegative-integer
          string->boolean)
 
@@ -29,9 +28,6 @@
 
 (define-string->number-coercion
   string->negative-integer : Negative-Integer)
-
-(define-string->number-coercion
-  string->nonpositive-integer : Nonpositive-Integer)
 
 (define-string->number-coercion
   string->nonnegative-integer : Nonnegative-Integer)
