@@ -56,9 +56,9 @@ include the names of the environment variables your application depends on.
 
 Each entry in @racket[define/provide-environment] will produce a variable with the given name bound to
 the value of the equivalent environment variable. The name of the environment variable will be
-generated from the name of the Racket variable by converting the identifier to @tt{ALL_CAPS} and
-converting dashes to underscores. In the above example, Envy would fetch the values for
-@tt{SOME_ENVIRONMENT_VARIABLE} and @tt{ANOTHER_ENVIRONMENT_VARIABLE}.
+generated from the name of the Racket variable by converting the identifier to @tt{ALL_CAPS},
+converting dashes to underscores, and stripping question marks. In the above example, Envy would fetch
+the values for @tt{SOME_ENVIRONMENT_VARIABLE} and @tt{ANOTHER_ENVIRONMENT_VARIABLE}.
 
 When the module runs, the values for the specified variables will be loaded, but it's possible that
 the variables don't actually exist in the environment. In this case, an error will be thrown.
@@ -107,14 +107,14 @@ For example, given the following environment:
                                      #"THREADS" #"42"))
   (eval:alts (define/provide-environment
                [host : String]
-               [parallel : Boolean]
+               [parallel? : Boolean]
                [threads : Positive-Integer])
              (define-environment
                [host : String]
-               [parallel : Boolean]
+               [parallel? : Boolean]
                [threads : Positive-Integer]))
   host
-  parallel
+  parallel?
   threads)
 
 Note that the values are defined with the specified types, useful for Typed Racket users. Also, since
@@ -161,8 +161,8 @@ environment. This can be done with the @racket[#:name] option.
 
   Each @racket[name-id] is assigned the value of the environment variable with the name
   @racket[env-var-name-expr]. If no @racket[env-var-name-expr] is provided, the environment variable
-  name is inferred based on @racket[name-id]: the identifier is converted to all caps and all dashes
-  are converted to underscores.
+  name is inferred based on @racket[name-id]: the identifier is converted to all caps, all dashes are
+  converted to underscores, and all question marks are stripped.
 
   Before being assigned to @racket[name-id], the value of the environment variable is parsed based on
   @racket[type-id]. If no @racket[type-id] is provided, the type is inferred to be @racket[String].

@@ -35,7 +35,8 @@
                                     (~> (syntax-e #'name)
                                         symbol->string
                                         string-upcase
-                                        (string-replace "-" "_")))]
+                                        (string-replace "-" "_")
+                                        (string-replace "?" "")))]
                   [coerce (dict-ref auto-type-table #'type)]
                   [fetch-env-var
                    (if (attribute default)
