@@ -69,8 +69,7 @@
     [(name parse)
      (let ([value (getenv name)])
        (unless value
-         (error 'require-environment-variable
-                "The required environment variable \"~a\" is not defined." name))
+         (error 'envy "The required environment variable \"~a\" is not defined." name))
        (parse value))]
     [(name parse default)
      (let ([value (getenv name)])
