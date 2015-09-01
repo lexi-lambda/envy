@@ -156,7 +156,8 @@ environment. This can be done with the @racket[#:name] option.
           [maybe-type (code:line)
                       (code:line : type-id)]
           [option (code:line #:name env-var-name-expr)
-                  (code:line #:default default-expr)])]{
+                  (code:line #:default default-expr)
+                  (code:line #:coerce coerce-proc-expr)])]{
   Defines a set of variables to be initialized with values from the environment.
 
   Each @racket[name-id] is assigned the value of the environment variable with the name
@@ -178,6 +179,11 @@ environment. This can be done with the @racket[#:name] option.
     @item{@racket[Negative-Integer]}
     @item{@racket[Nonnegative-Integer]}]
 
+  If @racket[coerce-proc-expr] is provided, it must be a procedure that accepts a string and returns
+  either a value of type @racket[type-id] if provided, or a value of type @racket[String] if not provided.
+  This procedure is used to transform the environment variable's string value to a value of the proper
+  type. This overrides the default coercions for other types.
+  
   If the specified variable does not exist in the environment, @racket[name-id] is set to the value of
   @racket[default-expr]. If no @racket[default-expr] is provided, an error is raised.}
 
