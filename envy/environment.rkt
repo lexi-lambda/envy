@@ -3,15 +3,19 @@
 (require (for-syntax alexis/util/threading
                      racket/base
                      racket/dict
+                     racket/function
                      racket/string
                      racket/syntax
-                     syntax/id-table)
-         syntax/parse/define
+                     syntax/id-table
+                     syntax/parse)
          "private/coerce.rkt")
 
 (provide define-environment
          define/provide-environment
          define-environment-variable)
+
+(define-syntax-rule (define-syntax-parser id option-or-clause ...)
+  (define-syntax id (syntax-parser option-or-clause ...)))
 
 (define-for-syntax auto-type-table
   (make-immutable-free-id-table
@@ -29,7 +33,8 @@
   [(_ (~describe "name" name:id)
       (~optional (~describe "type" (~seq : type:id)) #:defaults ([type #'String]))
       (~or (~optional (~seq #:name env-var-name:expr) #:defaults ([env-var-name #f]))
-           (~optional (~seq #:default default:expr) #:defaults ([default #f])))
+           (~optional (~seq #:default default:expr) #:defaults ([default #f]))
+           (~optional (~seq #:coerce coerce-proc:expr) #:defaults ([coerce-proc #f])))
       ...)
    (with-syntax* ([env-var-name (or (attribute env-var-name)
                                     (~> (syntax-e #'name)
@@ -37,7 +42,9 @@
                                         string-upcase
                                         (string-replace "-" "_")
                                         (string-replace "?" "")))]
-                  [coerce (dict-ref auto-type-table #'type)]
+                  [coerce (or (attribute coerce-proc)
+                              (dict-ref auto-type-table #'type))]
+                                    
                   [fetch-env-var
                    (if (attribute default)
                        #'(require-environment-variable env-var-name coerce default)
@@ -68,10 +75,10 @@
 (define require-environment-variable
   (case-lambda
     [(name parse)
-     (let ([value (getenv name)])
-       (unless value
-         (error 'envy "The required environment variable \"~a\" is not defined." name))
-       (parse value))]
+     (define value (getenv name))
+     (unless value
+       (error 'envy "The required environment variable \"~a\" is not defined." name))
+     (parse value)]
     [(name parse default)
-     (let ([value (getenv name)])
-       (if value (parse value) default))]))
+     (define value (getenv name))
+     (if value (parse value) default)]))
