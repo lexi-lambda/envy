@@ -1,3 +1,3 @@
 #lang info
 
-(define scribblings '(("scribblings/envy.scrbl")))
+(define scribblings '(("scribblings/envy.scrbl" (multi-page))))
