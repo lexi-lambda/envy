@@ -9,7 +9,7 @@ fi
 rm -rf docs || exit 0;
 
 # build the documentation files
-scribble +m --redirect-main http://docs.racket-lang.org/ --html --dest ./docs ./envy/scribblings/envy.scrbl
+scribble +m --redirect-main http://pkg-build.racket-lang.org/doc/ --html --dest ./docs ./envy/scribblings/envy.scrbl
 
 # go to the documentation directory and create a *new* Git repo
 cd docs
