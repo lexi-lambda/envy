@@ -16,7 +16,7 @@ before_install:
   - export PATH="${RACKET_DIR}/bin:${PATH}"
 
 install:
-  - raco pkg install --deps search-auto --name envy --link $TRAVIS_BUILD_DIR
+  - raco pkg install -in envy --auto --link $TRAVIS_BUILD_DIR
 
 before_script:
 
