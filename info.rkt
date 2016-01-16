@@ -6,6 +6,10 @@
 
 (define collection 'multi)
 
+; #lang envy generates code that uses Typed Racket
+(define implies
+  '("typed-racket-lib"))
+
 (define deps
   '("alexis-util"
     "base"
