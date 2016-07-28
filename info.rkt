@@ -12,11 +12,12 @@
 
 (define deps
   '("base"
-    "sweet-exp"
+    "sweet-exp-lib"
     "threading"
     "typed-racket-lib"))
 (define build-deps
   '("racket-doc"
     "scribble-lib"
+    "sweet-exp"
     "typed-racket-doc"
     "typed-racket-more"))
