@@ -11,9 +11,9 @@
   '("typed-racket-lib"))
 
 (define deps
-  '("alexis-util"
-    "base"
+  '("base"
     "sweet-exp"
+    "threading"
     "typed-racket-lib"))
 (define build-deps
   '("racket-doc"

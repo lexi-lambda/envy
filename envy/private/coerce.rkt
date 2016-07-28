@@ -2,7 +2,7 @@
 
 ;; This module implements typed coercion functions for converting strings to various datatypes.
 
-(require alexis/util/threading)
+(require threading)
 
 (provide string->integer
          string->positive-integer

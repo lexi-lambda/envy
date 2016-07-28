@@ -1,11 +1,11 @@
 #lang typed/racket/base
 
-(require (for-syntax alexis/util/threading
-                     racket/base
+(require (for-syntax racket/base
                      racket/dict
                      racket/string
                      racket/syntax
-                     syntax/id-table)
+                     syntax/id-table
+                     threading)
          syntax/parse/define
          "private/coerce.rkt")
 
