@@ -2,7 +2,7 @@
 
 (define name "envy")
 (define pkg-desc "an environment variable manager")
-(define version "1.0.0")
+(define version "1.0")
 
 (define collection 'multi)
 
